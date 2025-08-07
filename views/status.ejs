@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Robot Status Log</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1>All Robot Status Logs</h1>
+
+  <% if (data.length === 0) { %>
+    <p>No status records found.</p>
+  <% } else { %>
+    <table border="1" cellpadding="10">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Battery (%)</th>
+          <th>Obstacle</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(item => { %>
+          <tr>
+            <td><%= item.id %></td>
+            <td><%= item.battery %></td>
+            <td><%= item.obstacle ? "Yes" : "No" %></td>
+            <td><%= item.timestamp.toLocaleString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <br>
+  <a href="/">Go to Home</a>
+</body>
+</html>
