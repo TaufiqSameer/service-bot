@@ -116,11 +116,12 @@ router.get('/api/team', async (req, res) => {
     // If you want to store in DB -> SELECT * FROM team_members
     // For now, send static JSON like Flutter
     const team = [
-      { name: "Mohammad Taufeeq Sameer", image: "sameer.jpg" },
-      { name: "Bhavana", image: "bhavana.jpg" },
-      { name: "Sreeja", image: "Sreeja.jpg" },
-      { name: "Harsha", image: "harsha.jpg" }
-    ];
+    { name: "Mohammad Taufeeq Sameer", image: "/images/sameer.jpg" },
+    { name: "Bhavana", image: "/images/bhavana.jpg" },
+    { name: "Sreeja", image: "/images/Sreeja.jpg" },
+    { name: "Harsha", image: "/images/harsha.jpg" }
+];
+
     res.json(team);
   } catch (err) {
     console.error(err);
