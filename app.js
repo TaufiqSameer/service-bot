@@ -1,38 +1,29 @@
 import express from "express";
-import pg from "pg";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import robotRoutes from "./routes/robot.js";
+import db from "./db.js"; // ✅ single shared DB connection
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-// Middleware
+// Middleware for forms and JSON
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // <-- needed for Flutter POST requests
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-
-const db = new pg.Client({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  ssl: {
-    rejectUnauthorized: false,
-  }
-});
-
-db.connect();
-
-
-app.locals.db = db;
-
+// Routes
 app.use("/", robotRoutes);
 
+// Example health check API (for Flutter)
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", message: "Backend is running fine 🚀" });
+});
+
+// Start server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
