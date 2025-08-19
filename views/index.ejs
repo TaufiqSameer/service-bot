@@ -150,30 +150,36 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div id="map" style="height: 400px; width: 100%;"></div>
+
 <script>
-  // Fetch the API key from your backend
+  function initMap() {
+    const robotLocation = { lat: 17.19774936291105, lng: 78.59842424770561 };
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 17,
+      center: robotLocation
+    });
+
+    new google.maps.Marker({
+      position: robotLocation,
+      map: map,
+      title: 'Service Robot 🤖'
+    });
+  }
+
+  // Fetch the key from backend and load Google Maps dynamically
   fetch("/config")
     .then(res => res.json())
     .then(config => {
+      if (!config.googleMapsApiKey) {
+        console.error("Google Maps API key is missing!");
+        return;
+      }
       const script = document.createElement("script");
       script.src = `https://maps.googleapis.com/maps/api/js?key=${config.googleMapsApiKey}&callback=initMap`;
       script.async = true;
       script.defer = true;
       document.head.appendChild(script);
     });
-
-  function initMap() {
-    var robotLocation = { lat: 17.19774936291105, lng: 78.59842424770561 };
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 17,
-      center: robotLocation
-    });
-
-    var marker = new google.maps.Marker({
-      position: robotLocation,
-      map: map,
-      title: 'Service Robot 🤖'
-    });
-  }
 </script>
