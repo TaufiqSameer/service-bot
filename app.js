@@ -23,6 +23,12 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Backend is running fine 🚀" });
 });
 
+// Node.js example (Express)
+app.get("/config", (req, res) => {
+  res.json({ googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY });
+});
+
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
