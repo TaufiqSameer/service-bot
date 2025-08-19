@@ -1,10 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import bodyParser from "body-parser";
-import dotenv from "dotenv";
+
 import robotRoutes from "./routes/robot.js";
 import db from "./db.js"; // ✅ single shared DB connection
 
-dotenv.config();
+
 
 const app = express();
 const port = 3000;
