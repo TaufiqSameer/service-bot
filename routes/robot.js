@@ -95,6 +95,19 @@ router.get('/api/orders', async (req, res) => {
   }
 });
 
+router.post('/api/move', async (req, res) => {
+  try {
+    await db.query(
+      "INSERT INTO robot_orders (task, destination) VALUES ($1, $2)",
+      ["move", "autonomous"]
+    );
+    res.json({ success: true, message: "Robot moving" });
+  } catch (err) {
+    console.error("Error triggering move command:", err);
+    res.status(500).json({ success: false, message: "Failed to move robot" });
+  }
+});
+
 // Add a new order (JSON)
 router.post('/api/order', async (req, res) => {
   const { task, destination } = req.body;
